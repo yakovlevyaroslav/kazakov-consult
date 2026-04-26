@@ -1,0 +1,35 @@
+@use "variables" as *;
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  padding: 16px 28px;
+
+  border-radius: 999px;
+
+  color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.16px;
+
+  cursor: pointer;
+
+  transition: all 1s ease;
+
+  &--primary {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(135deg, #2F6DFA 0%, #52B8FF 52%, #8CF0CF 100%);
+    background-size: 100% 100%, 150% 150%;
+    background-position: 0 0, 0% 50%;
+    transition: background-position 0.8s ease, box-shadow 0.8s ease;
+    box-shadow: 0 30px 80px 0 rgba(43, 109, 248, 0.16);
+
+    &:hover {
+      background-position: 0 0, 100% 50%;
+      box-shadow: 0 30px 80px 0 rgba(43, 109, 248, 0.16);
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@use "variables" as *;
+
+body {
+  margin: 0;
+  font-family: $font-family-manrope;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $color-dark-blue;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(760.06% 100.88% at 0% 0%, rgba(119, 214, 255, 0.55) 0%, rgba(0, 0, 0, 0.00) 34%), radial-gradient(668.47% 88.72% at 85% 12%, rgba(140, 240, 207, 0.48) 0%, rgba(0, 0, 0, 0.00) 26%), linear-gradient(135deg, #F7FBFF 0%, #EAF1FF 45%, #EEFAF7 100%);
+}
+
+.container {
+  width: min(100% - 2rem, $container-max);
+  margin-inline: auto;
+}
+
+section {
+  padding: 80px 0;
+}
+
+.section {
+  &__greeting {
+    color: #2B6DF8;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 19px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    color: #122033;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 61px;
+    letter-spacing: -3px;
+  }
+
+  &__text {
+    color: rgba(18, 32, 51, 0.72);
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 31px;
+    margin-bottom: 20px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 50px;
+    border-radius: 40px;
+  }
+}

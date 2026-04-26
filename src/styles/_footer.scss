@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid $border;
+  padding: 1.25rem 0;
+  color: $text-muted;
+  font-size: 0.9rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.footer__copy {
+  margin: 0;
+}
+
+.footer__link {
+  color: $accent;
+}
