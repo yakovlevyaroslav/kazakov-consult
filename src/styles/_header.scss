@@ -1,7 +1,33 @@
 @use "variables" as *;
 
 .site-header {
-  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 70;
+  width: 100%;
+  border-bottom: 1px solid transparent;
+  opacity: 1;
+  transition: all 0.35s ease; 
+
+  &.is-scrolled {
+    opacity: 0.72;
+    box-shadow: 0 8px 32px rgba(48, 84, 136, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    &:hover {
+      opacity: 1;
+      box-shadow: 0 14px 44px rgba(48, 84, 136, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .header__inner {
@@ -52,6 +78,9 @@
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
+  margin: 0;
+  border: none;
+  font: inherit;
   color: #FFF;
   text-align: center;
   font-family: Manrope;
@@ -87,7 +116,21 @@
     flex-shrink: 0;
     border-radius: 999px;
     background: #FFF;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transform-origin: center;
   }
 
+  &.is-active {
+    .menu-btn__line:first-child {
+      transform: translateY(3.5px) rotate(45deg);
+    }
 
+    .menu-btn__line:last-child {
+      transform: translateY(-3.5px) rotate(-45deg);
+    }
+  }
+}
+
+#main {
+  padding-top: $site-header-height;
 }

@@ -1,0 +1,137 @@
+@use "variables" as *;
+
+.consultation {
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    .section__title {
+      text-align: center;
+    }
+
+    .section__text {
+      text-align: center;
+    }
+  }
+}
+
+.consultation__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+
+  &-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    padding: 20px;
+
+    &__title {
+      color: #122033;
+      font-family: $font-family-unbounded;
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 60px;
+      letter-spacing: -3px;
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+}
+
+.consultation__form {
+  color: #FFF;
+  border-radius: 25px;
+  padding: 30px;
+
+  background: linear-gradient(160deg, rgba(16, 28, 52, 0.96) 8.49%, rgba(23, 48, 88, 0.92) 53.32%, rgba(40, 111, 180, 0.88) 91.51%);
+  box-shadow: 0 28px 80px 0 rgba(20, 44, 84, 0.22);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    line-height: 1;
+    font-size: 14px;
+    padding-left: 10px;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  input {
+    margin-bottom: 5px;
+
+    height: 60px;
+    padding: 12px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1;
+    }
+  }
+
+  &-info {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.4px;
+    margin-bottom: 20px;
+  }
+}
+
+.consultation__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.84);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 249, 255, 0.78) 100%);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.94) inset, 0 18px 48px 0 rgba(74, 112, 168, 0.08);
+
+    &__title {
+      color: #2B6DF8;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 18px; /* 150% */
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    &__link {
+      color: #122033;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 26px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #2B6DF8;
+      }
+    }
+  }
+}

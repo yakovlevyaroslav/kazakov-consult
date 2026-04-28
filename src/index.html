@@ -13,21 +13,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header" id="header">
       <div class="container header__inner">
         <a class="logo" href="#">
           <div class="logo__circle"></div>
           <div class="logo__text">Kazakov Consult</div>
         </a>
-        <div class="menu-btn">
-          Меню 
+        <button
+          type="button"
+          class="menu-btn"
+          id="menu-btn"
+          aria-expanded="false"
+          aria-controls="nav-overlay"
+          aria-label="Открыть меню"
+        >
+          Меню
           <div class="menu-btn__lines">
             <span class="menu-btn__line"></span>
             <span class="menu-btn__line"></span>
           </div>
-        </div>
+        </button>
       </div>
     </header>
+
+    <div
+      class="nav-overlay"
+      id="nav-overlay"
+      aria-hidden="true"
+    >
+      <div class="nav-overlay__backdrop" id="nav-overlay-backdrop"></div>
+      <nav class="nav-overlay__panel" aria-label="Разделы страницы">
+        <div class="nav-overlay__header">
+          <p class="nav-overlay__title">Разделы</p>
+          <button
+            type="button"
+            class="nav-overlay__close"
+            id="nav-overlay-close"
+            aria-label="Закрыть меню"
+          >
+            ×
+          </button>
+        </div>
+        <ul class="nav-overlay__list">
+          <li>
+            <a class="nav-overlay__link" href="#hero">Начало</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#about">Обо мне</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#kdr">Карта достижения результата</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#steps">Этапы разбора КДР</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#situations">Диагностика состояния</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#youself">Кому это подходит</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#tariffs">Формат и стоимость</a>
+          </li>
+          <li>
+            <a class="nav-overlay__link" href="#consultation">Запись на консультацию</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
     <main id="main">
       <section id="hero" class="hero">
@@ -164,9 +218,9 @@
 
       <section id="kdr" class="kdr">
         <div class="container section__container kdr__inner">
-          <p class="section__greeting">
+          <div class="section__greeting">
             метод разборов
-          </p>
+          </div>
           <h2 class="section__title">
             КАРТА ДОСТИЖЕНИЯ РЕЗУЛЬТАТА
           </h2>
@@ -174,76 +228,403 @@
             Я покажу как вам планировать ваши дела, где найти ресурсы и время к их осуществлению
           </p>
 
-          
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-1.jpg">
+                  <img src="/static/kdr-1.jpg" alt="КДР 1" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-2.jpg">
+                  <img src="/static/kdr-2.jpg" alt="КДР 2" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-3.jpg">
+                  <img src="/static/kdr-3.jpg" alt="КДР 3" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-4.jpg">
+                  <img src="/static/kdr-4.jpg" alt="КДР 4" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-5.jpg">
+                  <img src="/static/kdr-5.jpg" alt="КДР 5" />
+                </a>
+              </div>
+              <div class="swiper-slide">
+                <a class="swiper-slide__link" href="/static/kdr-6.jpg">
+                  <img src="/static/kdr-6.jpg" alt="КДР 6" />
+                </a>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
         </div>
       </section>
 
-      <!-- <section id="contact" class="contact" aria-labelledby="contact-title">
-        <div class="container contact__inner">
-          <div class="contact__intro">
-            <h2 id="contact-title">Обратная связь</h2>
-            <p>
-              Заполните форму — ответим удобным для вас способом. Контакт может
-              быть телефоном, Telegram или ссылкой на профиль в Telegram.
-            </p>
+      <section id="steps" class="steps">
+        <div class="container section__container steps__inner">
+          <div class="section__greeting">
+            получите поддержку, необходимую чтобы добиться своих целей
+          </div>
+          <h2 class="section__title">
+            Этапы разбора КДР
+          </h2>
+          <p class="section__text">
+            Переход от внутреннего хаоса к структурной ясности после консультации. 
+          </p>
+
+          <div class="steps__list">
+            <div class="steps__list-line"></div>
+            <div class="steps__list-item">
+              <div class="steps__list-item__number">
+                01
+              </div>
+              <div class="steps__list-item__block">
+                <div class="steps__list-item__badge">
+                  диагностика состояния
+                </div>
+                <h4 class="steps__list-item__title">
+                  Аудит вашего фокуса
+                </h4>
+                <p class="steps__list-item__text">
+                  Вытаскиваем все что вас беспокоит, определяем что влияет на результат больше ВСЕГО 
+                </p>
+              </div>
+            </div>
+            <div class="steps__list-item">
+              <div class="steps__list-item__number">
+                02
+              </div>
+              <div class="steps__list-item__block">
+                <div class="steps__list-item__badge">
+                  вектор мотивации
+                </div>
+                <h4 class="steps__list-item__title">
+                  Определение целей и их формулировка
+                </h4>
+                <p class="steps__list-item__text">
+                  Цели не так просты как кажутся - мы узнаем что вам действительно важно
+                </p>
+              </div>
+            </div>
+            <div class="steps__list-item">
+              <div class="steps__list-item__number">
+                03
+              </div>
+              <div class="steps__list-item__block">
+                <div class="steps__list-item__badge">
+                  слепая зона
+                </div>
+                <h4 class="steps__list-item__title">
+                  Поиск ограничений
+                </h4>
+                <p class="steps__list-item__text">
+                  Наличие плана не достаточно, также важно понимать чего вы на самом деле избегаете и боитесь, и что с этим делать
+                </p>
+              </div>
+            </div>
+            <div class="steps__list-item">
+              <div class="steps__list-item__number">
+                04
+              </div>
+              <div class="steps__list-item__block steps__list-item__block--dop">
+                <div class="steps__list-item__badge">
+                  короткий путь
+                </div>
+                <h4 class="steps__list-item__title">
+                  Построение КДР
+                </h4>
+                <p class="steps__list-item__text">
+                  КДР — Карта Достижения Результата: визуальная схема ситуации, приоритетов и ближайших шагов.
+                </p>
+
+                <div class="steps__list-item__dop">
+                  <div class="steps__list-item__dop-title">
+                    КДР дает ясность и становится опорой.
+                  </div>
+                  <div class="steps__list-item__text">
+                    Вы поймете почему вы откладываете, избегаете, и выбираете не эффективные пути к своей цели.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <form
-            id="feedback-form"
-            class="form"
-            novalidate
-            aria-describedby="form-status"
-          >
-            <div
-              id="form-status"
-              class="form-status"
-              role="status"
-              aria-live="polite"
-            ></div>
-
-            <div class="field">
-              <label for="name">Имя</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                autocomplete="name"
-                required
-                minlength="2"
-                maxlength="80"
-                placeholder="Как к вам обращаться"
-              />
-              <p class="field-error" id="name-error" role="alert" hidden></p>
-            </div>
-
-            <div class="field">
-              <label for="contact-input">Контакт</label>
-              <input
-                type="text"
-                id="contact-input"
-                name="contact"
-                autocomplete="tel"
-                required
-                maxlength="120"
-                spellcheck="false"
-                placeholder="+7 (900) 123-45-67, @username или https://t.me/…"
-              />
-              <p class="field-error" id="contact-error" role="alert" hidden></p>
-            </div>
-
-            <button type="submit" class="btn btn--primary btn--block" id="submit-btn">
-              Отправить
-            </button>
-          </form>
         </div>
-      </section> -->
+      </section>
+
+      <section id="situations" class="situations">
+        <div class="container  section__container section__container--nobg situations__inner">
+          <div class="section__greeting">
+            Диагностика состояния
+          </div>
+          <h2 class="section__title">
+            С чем мы сталкиваемся?
+          </h2>
+          <p class="section__text">
+            Типичные состояния, в которых легко потерять опору. Это нормально, и с этим можно системно работать. 
+          </p>
+
+          <div class="situations__grid">
+            <div class="situations__grid-item situations__grid-item--1">
+              <div class="situations__grid-item__icon situations__grid-item__icon--1"></div>
+              <h3 class="situations__grid-item__title">
+                Отсутствие безопасности и веры в будущее
+              </h3>
+              <p class="situations__grid-item__text">
+                Со стороны кажется, что ситуация под контролем, но цена этой устойчивости слишком высока: перегруз, распыление и усталость. 
+              </p>
+            </div>
+            <div class="situations__grid-item situations__grid-item--2">
+              <div class="situations__grid-item__icon situations__grid-item__icon--2"></div>
+              <h3 class="situations__grid-item__title">
+                Обесценивание настоящего
+              </h3>
+              <p class="situations__grid-item__text">
+                Есть достижения и результаты, но нет радости и вдохновения
+              </p>
+            </div>
+            <div class="situations__grid-item situations__grid-item--3">
+              <div class="situations__grid-item__icon situations__grid-item__icon--3"></div>
+              <h3 class="situations__grid-item__title">
+                Слишком много направлений сразу
+              </h3>
+              <p class="situations__grid-item__text">
+                Задач, идей и возможностей так много, что становится трудно понять, куда вкладывать время, деньги и внимание в первую очередь. 
+              </p>
+            </div>
+            <div class="situations__grid-item situations__grid-item--4">
+              <div class="situations__grid-item__icon situations__grid-item__icon--4"></div>
+              <h3 class="situations__grid-item__title">
+                Нет времени на личную жизнь 
+              </h3>
+              <p class="situations__grid-item__text">
+                Хочется чаще быть с близкими, но внимание постоянно в обязательствах. Тяжело отпустить контроль.
+              </p>
+            </div>
+            <div class="situations__grid-item situations__grid-item--5">
+              <div class="situations__grid-item__icon situations__grid-item__icon--5"></div>
+              <h3 class="situations__grid-item__title">
+                Решение откладывается неделями
+              </h3>
+              <p class="situations__grid-item__text">
+                Вопрос важный, но каждый новый аргумент только усиливает внутренние сомнения и не дает выбрать уверенный следующий шаг. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="youself" class="youself">
+        <div class="container  section__container youself__inner">
+          <div class="section__greeting">
+            узнаете ли вы себя?
+          </div>
+          <h2 class="section__title">
+            Кому это подходит
+          </h2>
+          <p class="section__text">
+            Чаще всего предприимчевому человеку не хватает одного из трех ресурсов: денег, времени или энергии. Этот формат особенно полезен тем, у кого деньги есть, но не хватает времени, энергии или обоих ресурсов сразу. 
+          </p>
+
+          <div class="youself__grid">
+            <div class="youself__grid-item youself__grid-item--1">
+              <h3 class="youself__grid-item__title">
+                Когда проблему уже нельзя игнорировать, но разбираться в ней самостоятельно слишком дорого по ресурсу.
+              </h3>
+              <p class="youself__grid-item__text">
+                Этот формат нужен предпринимателям и руководителям, у которых есть возможность инвестировать в решение, но нет запаса времени, сил или внутреннего пространства, чтобы в одиночку распутывать сложную ситуацию в бизнесе.
+              </p>
+            </div>
+            <div class="youself__grid-item youself__grid-item--2">
+              <h3 class="youself__grid-item__title">
+                не хватает сил
+              </h3>
+              <p class="youself__grid-item__text">
+                Когда накопилась усталость, напряжение и перегруз, из-за чего даже важные вопросы откладываются и подвисают. 
+              </p>
+            </div>
+            <div class="youself__grid-item youself__grid-item--3">
+              <h3 class="youself__grid-item__title">
+                не хватает времени
+              </h3>
+              <p class="youself__grid-item__text">
+                Когда вы постоянно в операционке и просто не можете выделить часы на глубокий разбор без потери темпа в бизнесе. 
+              </p>
+            </div>
+            <div class="youself__grid-item youself__grid-item--4">
+              <h3 class="youself__grid-item__title">
+                Комбинация
+              </h3>
+              <p class="youself__grid-item__text">
+                Деньги вроде есть, но нет ни времени, ни ресурса держать все в голове
+              </p>
+
+              <div class="steps__list-item__dop">
+                <div class="steps__list-item__dop-title">
+                  КДР дает ясность и становится опорой.
+                </div>
+                <div class="steps__list-item__text">
+                  В такой точке особенно важно получить внешнюю структуру: быстро собрать картину, увидеть приоритеты и снять лишнюю нагрузку с себя.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section id="tariffs" class="tariffs">
+        <div class="container section__container tarrifs__inner">
+          <div class="section__greeting">
+            Условия работы
+          </div>
+          <h2 class="section__title">
+            Формат и стоимость
+          </h2>
+          <p class="section__text">
+            Индивидуальная работа и построение <b>КДР</b> за одну встречу
+          </p>
+
+          
+
+          <div class="tariffs__grid">
+            <div class="tariffs__grid-item tariffs__grid-item--1">
+              <div class="tariffs__grid-item__icon situations__grid-item__icon situations__grid-item__icon--1"></div>
+              <h3 class="tariffs__grid-item__title">
+                Индивидуальная консультация
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Работа один на один с вашей текущей ситуацией.
+              </p>
+            </div>
+            <div class="tariffs__grid-item tariffs__grid-item--2">
+              <div class="tariffs__grid-item__icon situations__grid-item__icon situations__grid-item__icon--2"></div>
+              <h3 class="tariffs__grid-item__title">
+                Длительность: от 2 до 4 часов
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Глубина зависит от сложности задачи и количества вводных.
+              </p>
+            </div>
+            <div class="tariffs__grid-item tariffs__grid-item--3">
+              <div class="tariffs__grid-item__icon situations__grid-item__icon situations__grid-item__icon--3"></div>
+              <h3 class="tariffs__grid-item__title">
+                Онлайн или офлайн
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Формат встречи выбирается по согласованию и удобству сторон.
+              </p>
+            </div>
+            <div class="tariffs__grid-item tariffs__grid-item--4">
+              <div class="tariffs__grid-item__icon situations__grid-item__icon situations__grid-item__icon--5"></div>
+              <h3 class="tariffs__grid-item__title">
+                Результат по итогам
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Клиент получает разбор ситуации и КДР — Карту Достижения Результата.
+              </p>
+            </div>
+            <div class="tariffs__grid-item tariffs__grid-item--5">
+              <h3 class="tariffs__grid-item__title">
+                Стоимость
+                <br>
+                <span>
+                  15 000 ₽
+                </span>
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Это инвестиция, которая помогает сократить расходы и увеличить доходы. Когда речь заходит о «цене», помните: важно оценивать не только выгоды, но и то, во сколько вам обходится отсутствие Карты достижения результата.
+              </p>
+            </div>
+            <div class="tariffs__grid-item tariffs__grid-item--6">
+              <h3 class="tariffs__grid-item__title">
+                Прозрачные условия
+              </h3>
+              <p class="tariffs__grid-item__text">
+                Без скрытых этапов и допродаж: формат, длительность и результат фиксируются заранее.
+              </p>
+            </div>
+            
+          </div>
+
+        </div>
+      </section>
+
+
+
+      <section id="consultation" class="consultation">
+        <div class="container  section__container section__container--nobg consultation__inner">
+          <div class="section__greeting">
+            Запись на консультацию
+          </div>
+          <h2 class="section__title">
+            Давайте нарисуем вашу карту
+          </h2>
+          <p class="section__text">
+            Разберем текущую бизнес-ситуацию и вы получите ясную структуру дальнейших шагов. 
+          </p>
+
+          <div class="consultation__content">
+            <div class="consultation__content-block">
+              <div class="consultation__content-block__title">
+                Оставьте заявку
+              </div>
+              <form class="consultation__form">
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" placeholder="Как к вам обращаться">
+                <label for="phone">Телефон или Telegram</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 999 123-45-67 или @telegram">
+                <div class="consultation__form-info">
+                  Можно указать номер телефона или MAX, а также Telegram в формате `@username`. 
+                </div>
+                
+                <button class="btn btn--primary" type="submit">Отправить заявку</button>
+              </form>
+            </div>
+            <div class="consultation__content-block">
+              <div class="consultation__content-block__title">
+                Связаться первым
+              </div>
+              <div class="consultation__contacts">
+                <div class="consultation__contacts-item consultation__contacts-item--email">
+                  <div class="consultation__contacts-item__title">
+                    Телефон, Max
+                  </div>
+                  <a class="consultation__contacts-item__link" href="tel:+79953672269" target="_blank">+7 995 367-22-69</a>
+                </div>
+                <div class="consultation__contacts-item consultation__contacts-item--tg">
+                  <div class="consultation__contacts-item__title">
+                    Telegram
+                  </div>
+                  <a class="consultation__contacts-item__link" href="https://t.me/kazakovcounsult" target="_blank">@kazakovcounsult</a>
+                </div>
+                <div class="consultation__contacts-item consultation__contacts-item--max">
+                  <div class="consultation__contacts-item__title">
+                    Почта
+                  </div>
+                  <a class="consultation__contacts-item__link" href="mailto:kazakovconsult@mail.ru" target="_blank">kazakovconsult@mail.ru</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" id="footer">
       <div class="container footer__inner">
-        <p class="footer__copy">© <span id="year"></span> Studio. Все права защищены.</p>
-        <a class="footer__link" href="#hero">Наверх</a>
+        <p class="footer__copy">© <span id="year"></span>Kazakov Consult Все права защищены.</p>
+        <a class="footer__link" href="#header">Наверх</a>
       </div>
     </footer>
+
+    
   </body>
 </html>

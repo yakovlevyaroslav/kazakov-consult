@@ -1,0 +1,122 @@
+.steps {
+
+}
+
+.steps__inner {
+} 
+
+.steps__list {
+  padding-left: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  position: relative;
+
+  &-line {
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(43, 109, 248, 0.12) 0%, rgba(43, 109, 248, 0.42) 40%, rgba(140, 240, 207, 0.50) 100%);
+    box-shadow: 0 0 24px 0 rgba(43, 109, 248, 0.12);
+    width: 3px;
+    height: 100%;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  &-item {
+    display: flex;
+    gap: 20px;
+
+    &__number {
+      display: flex;
+      flex-shrink: 0;
+      width: 75px;
+      height: 75px;
+      padding: 25px;
+      justify-content: center;
+      align-items: center;
+
+      color: #2B6DF8;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 22px; /* 150% */
+      letter-spacing: 1.2px;
+
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.96) 6.17%, rgba(225, 239, 255, 0.72) 93.83%);
+      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.90) inset, 0 18px 34px 0 rgba(67, 106, 160, 0.14);
+    }
+
+    &__block {
+      width: 100%;
+      border-radius: 25px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(245, 250, 255, 0.72) 100%);
+      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.92) inset, 0 18px 48px 0 rgba(74, 112, 168, 0.10);
+      
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      &--dop {
+        border: 1px solid rgba(255, 255, 255, 0.86);
+        background: radial-gradient(105.96% 302.48% at 100% 0%, rgba(119, 214, 255, 0.18) 0%, rgba(0, 0, 0, 0.00) 24%), linear-gradient(145deg, rgba(239, 247, 255, 0.96) 6.17%, rgba(229, 244, 255, 0.88) 48.25%, rgba(237, 253, 248, 0.92) 93.83%);
+        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.94) inset, 0 28px 80px 0 rgba(43, 109, 248, 0.14);
+      }
+    }
+
+    &__badge {
+      color: rgba(43, 109, 248, 0.86);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 18px; /* 150% */
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    &__title {
+      color: #122033;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 31px; /* 116% */
+      letter-spacing: -0.8px;
+    }
+
+    &__text {
+      color: rgba(18, 32, 51, 0.74);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 25px; /* 168% */
+    }
+
+    &__dop {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      padding: 20px;
+
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(243, 250, 255, 0.78) 100%);
+      box-shadow: 0 16px 38px 0 rgba(65, 105, 161, 0.10);
+
+      &__title {
+        color: #122033;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 23px; /* 140% */
+      }
+    }
+  }
+}

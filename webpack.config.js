@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 /**
  * @param {unknown} _env
@@ -23,9 +24,24 @@ module.exports = (_env, argv) => {
       port: 8080,
       hot: true,
       open: true,
+      static: {
+        directory: path.resolve(__dirname, "public"),
+      },
     },
     module: {
       rules: [
+        {
+          test: /\.css$/i,
+          use: [
+            isProd ? MiniCssExtractPlugin.loader : "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: !isProd,
+              },
+            },
+          ],
+        },
         {
           test: /\.scss$/i,
           use: [
@@ -60,6 +76,15 @@ module.exports = (_env, argv) => {
               useShortDoctype: true,
             }
           : false,
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, "public"),
+            to: path.resolve(__dirname, "dist"),
+            noErrorOnMissing: true,
+          },
+        ],
       }),
       ...(isProd
         ? [
