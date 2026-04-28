@@ -1,0 +1,57 @@
+@use "variables" as *;
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f7fbff 0%, #eaf1ff 45%, #eefaf7 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 16px 40px rgba(48, 84, 136, 0.1);
+  }
+
+  &__logo-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2b6df8 0%, #77d6ff 100%);
+    box-shadow: 0 0 20px rgba(43, 109, 248, 0.45);
+  }
+
+  &__text {
+    font-family: $font-family-manrope;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-dark-blue;
+    letter-spacing: 0.2px;
+  }
+}
+
+body.app-loading {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    transition: none;
+  }
+}
