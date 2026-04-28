@@ -635,13 +635,32 @@
           <div class="consultation__content">
             <div class="consultation__content-block">
               <div class="consultation__content-block__title">
-                Оставьте заявку
+                Оставить заявку
               </div>
-              <form class="consultation__form">
+              <form class="consultation__form" id="consultation-form" novalidate>
+                <div
+                  class="consultation__form-status"
+                  id="consultation-form-status"
+                  aria-live="polite"
+                ></div>
                 <label for="name">Имя</label>
-                <input type="text" id="name" name="name" placeholder="Как к вам обращаться">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Как к вам обращаться"
+                  autocomplete="name"
+                >
+                <div class="consultation__field-error" id="name-error" aria-live="polite"></div>
                 <label for="phone">Телефон или Telegram</label>
-                <input type="tel" id="phone" name="phone" placeholder="+7 999 123-45-67 или @telegram">
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="+7 999 123-45-67 или @telegram"
+                  autocomplete="tel"
+                >
+                <div class="consultation__field-error" id="phone-error" aria-live="polite"></div>
                 <div class="consultation__form-info">
                   Можно указать номер телефона или MAX, а также Telegram в формате `@username`. 
                 </div>
