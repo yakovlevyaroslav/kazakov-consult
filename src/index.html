@@ -1,16 +1,73 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
+    <!-- Базовые технические настройки страницы -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Основные SEO-метаданные для поисковых систем -->
     <meta
       name="description"
-      content="Минималистичный одностраничный лендинг с формой обратной связи."
+      content="Консалтинг для предпринимателей и руководителей: карта достижения результата, диагностика текущего состояния и персональный маршрут к целям."
     />
-    <title>Лендинг — обратная связь</title>
+    <meta
+      name="keywords"
+      content="консалтинг, бизнес-консалтинг, предприниматель, руководитель, стратегия, карта достижения результата, консультация"
+    />
+    <meta name="author" content="Kazakov Consult" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://example.com/" />
+
+    <!-- Open Graph: как страница отображается при шаринге в соцсетях/мессенджерах -->
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Kazakov Consult — короткий путь к результату"
+    />
+    <meta
+      property="og:description"
+      content="Консалтинг для предпринимателей и руководителей: диагностика состояния, ясный план действий и фокус на достижение результата."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:site_name" content="Kazakov Consult" />
+    <meta property="og:image" content="https://example.com/og-image.jpg" />
+    <meta property="og:image:alt" content="Kazakov Consult" />
+
+    <!-- Twitter Card: отдельные теги для превью в X (Twitter) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Kazakov Consult — короткий путь к результату"
+    />
+    <meta
+      name="twitter:description"
+      content="Персональный консалтинг для предпринимателей и руководителей."
+    />
+    <meta name="twitter:image" content="https://example.com/og-image.jpg" />
+    <meta name="theme-color" content="#111111" />
+
+    <!-- Заголовок страницы в поиске и вкладке браузера -->
+    <title>Kazakov Consult — консалтинг для предпринимателей и руководителей</title>
+
+    <!-- Оптимизация загрузки внешних шрифтов -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <!-- Структурированные данные schema.org для поисковых систем -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Kazakov Consult",
+        "url": "https://example.com/",
+        "description": "Консалтинг для предпринимателей и руководителей: карта достижения результата и персональная стратегия.",
+        "areaServed": "RU",
+        "inLanguage": "ru"
+      }
+    </script>
   </head>
   <body class="app-loading">
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -139,7 +196,6 @@
 
           <div class="about__grid">
             <div class="about__grid-item about__grid-item--1"></div>
-
             <div class="about__grid-item about__grid-item--main about__grid-item--2">
               <h3 class="about__grid-item--main__title">
                 10+ лет в бизнесе: от производства с выручкой 125 млн до IT-стартапа с венчурными инвестициями.
@@ -149,7 +205,6 @@
                 Сейчас помогаю собирать кратчайшие маршруты к результату.
               </p>
             </div>
-
             <div class="about__grid-item about__grid-item--main about__grid-item--3">
               <h3 class="about__grid-item__title">
                 Пора начинать
