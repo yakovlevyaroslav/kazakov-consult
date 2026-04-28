@@ -13,7 +13,9 @@ module.exports = (_env, argv) => {
 
   return {
     mode: isProd ? "production" : "development",
-    entry: "./src/main.js",
+    entry: {
+      bootstrap: "./src/bootstrap.js",
+    },
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: isProd ? "js/[name].[contenthash:8].js" : "js/[name].js",
@@ -96,6 +98,9 @@ module.exports = (_env, argv) => {
     ],
     optimization: {
       minimize: isProd,
+      splitChunks: {
+        chunks: "all",
+      },
       minimizer: isProd ? ["...", new CssMinimizerPlugin()] : [],
     },
   };
