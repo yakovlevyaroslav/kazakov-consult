@@ -27,6 +27,14 @@
     border: 1px solid rgba(255, 255, 255, 0.75);
     background: rgba(255, 255, 255, 0.72);
     box-shadow: 0 16px 40px rgba(48, 84, 136, 0.1);
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.26s ease, opacity 0.26s ease;
+  }
+
+  &__inner.is-exit {
+    transform: scale(0.86);
+    opacity: 0;
   }
 
   &__logo-dot {
@@ -46,12 +54,31 @@
   }
 }
 
+.preloader__logo-copy {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.preloader__logo-copy.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
 body.app-loading {
   overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .preloader {
+    transition: none;
+  }
+
+  .preloader__inner,
+  .preloader__logo-copy {
     transition: none;
   }
 }
