@@ -668,9 +668,8 @@
                 <div
                     id="captcha-container"
                     class="smart-captcha"
-                    data-sitekey="ysc1_fGaH4jKQ1a8L62T3do2U00atstfJ8wP9Jj3dYJN646a60c7b"
                 ></div>
-                <button class="btn btn--primary" type="submit">Отправить заявку</button>
+                <button class="btn btn--primary" disabled id="consultation-form-send" type="submit">Отправить заявку</button>
               </form>
             </div>
             <div class="consultation__content-block">
@@ -727,6 +726,7 @@
         <form class="consultation-popup__content consultation-popup__content--survey" id="consultation-popup-survey" hidden>
           <h3 class="consultation-popup__title">Короткий опрос</h3>
           <p class="consultation-popup__subtitle">Ответьте в свободной форме, чтобы заявка была точнее.</p>
+          <div class="consultation-popup__status" id="consultation-popup-survey-status" aria-live="polite"></div>
 
           <label for="survey-q1">1. Чем занимаешься?</label>
           <textarea id="survey-q1" name="survey-q1" rows="3" placeholder="Напиши род деятельности, профессию или хобби"></textarea>
@@ -745,5 +745,6 @@
       </div>
     </div>
 
+    <script src="https://smartcaptcha.yandexcloud.net/captcha.js" defer></script>
   </body>
 </html>

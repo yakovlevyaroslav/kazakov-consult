@@ -26,6 +26,12 @@ module.exports = (_env, argv) => {
       port: 8080,
       hot: true,
       open: true,
+      proxy: [
+        {
+          context: ["/api"],
+          target: "http://localhost:3000",
+        },
+      ],
       static: {
         directory: path.resolve(__dirname, "public"),
       },

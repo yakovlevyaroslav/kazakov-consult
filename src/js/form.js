@@ -6,6 +6,7 @@ const contactInput = document.getElementById("phone");
 const nameError = document.getElementById("name-error");
 const contactError = document.getElementById("phone-error");
 const formStatus = document.getElementById("consultation-form-status");
+const captchaContainer = document.getElementById("captcha-container");
 const popup = document.getElementById("consultation-popup");
 const popupBackdrop = document.getElementById("consultation-popup-backdrop");
 const popupDialog = popup?.querySelector(".consultation-popup__dialog");
@@ -15,6 +16,7 @@ const popupToSurveyButton = document.getElementById("consultation-popup-to-surve
 const popupDirectSendButton = document.getElementById("consultation-popup-send-direct");
 const popupBackButton = document.getElementById("consultation-popup-back");
 const popupSurveySubmitButton = document.getElementById("consultation-popup-send-survey");
+const popupSurveyStatus = document.getElementById("consultation-popup-survey-status");
 const surveyQ1 = document.getElementById("survey-q1");
 const surveyQ2 = document.getElementById("survey-q2");
 const surveyQ3 = document.getElementById("survey-q3");
@@ -26,6 +28,7 @@ if (
   !nameError ||
   !contactError ||
   !formStatus ||
+  !captchaContainer ||
   !popup ||
   !popupBackdrop ||
   !popupDialog ||
@@ -35,19 +38,28 @@ if (
   !popupDirectSendButton ||
   !popupBackButton ||
   !popupSurveySubmitButton ||
+  !popupSurveyStatus ||
   !surveyQ1 ||
   !surveyQ2 ||
   !surveyQ3
 ) {
   // Form can be absent on some pages.
 } else {
-  const submitButton = form.querySelector('button[type="submit"]');
+  const submitButton = document.getElementById("consultation-form-send");
   const defaultButtonText = submitButton?.textContent?.trim() || "Отправить заявку";
   let isSubmitting = false;
   let isNameTouched = false;
   let isContactTouched = false;
   let contactMode = null;
   let previousContactValue = "";
+  let captchaToken = "";
+  let isCaptchaVerified = false;
+  let captchaWidgetId = null;
+  let isCaptchaReady = false;
+
+  if (submitButton) {
+    submitButton.disabled = true;
+  }
 
   const showFieldError = (input, errorNode, message) => {
     input.classList.add("is-invalid");
@@ -70,9 +82,106 @@ if (
     }
   };
 
+  const setPopupSurveyStatus = (message, type) => {
+    popupSurveyStatus.textContent = message;
+    popupSurveyStatus.classList.remove("is-pending", "is-success", "is-error");
+    if (type) {
+      popupSurveyStatus.classList.add(`is-${type}`);
+    }
+  };
+
+  const canSubmitMainForm = () => {
+    const canSubmitByCaptcha = isCaptchaReady && isCaptchaVerified && Boolean(captchaToken);
+    const isMainFormValid =
+      isNameValueValid(nameInput.value) && isContactValueValid(contactInput.value, contactMode);
+    return canSubmitByCaptcha && isMainFormValid;
+  };
+
+  const updateCaptchaSubmitState = () => {
+    const canSubmitMain = canSubmitMainForm();
+
+    if (submitButton && !isSubmitting) {
+      submitButton.disabled = !canSubmitMain;
+    }
+
+    if (!isSubmitting) {
+      popupDirectSendButton.disabled = !canSubmitMain;
+      popupSurveySubmitButton.disabled = !canSubmitMain;
+    }
+  };
+
+  const canOpenConsultationPopup = () => canSubmitMainForm();
+
+  const initCaptcha = () => {
+    const { smartCaptchaSitekey } = FORM_CONFIG;
+    if (!smartCaptchaSitekey) {
+      setFormStatus("Не настроен публичный ключ SmartCaptcha.", "error");
+      return;
+    }
+
+    const renderWidget = () => {
+      if (!window.smartCaptcha || captchaWidgetId !== null) return;
+
+      captchaWidgetId = window.smartCaptcha.render(captchaContainer, {
+        sitekey: smartCaptchaSitekey,
+        callback: (token) => {
+          captchaToken = token || "";
+          isCaptchaVerified = Boolean(captchaToken);
+          if (captchaToken) setFormStatus("", null);
+          updateCaptchaSubmitState();
+        },
+        "expired-callback": () => {
+          captchaToken = "";
+          isCaptchaVerified = false;
+          updateCaptchaSubmitState();
+        },
+      });
+      isCaptchaReady = true;
+      updateCaptchaSubmitState();
+    };
+
+    if (window.smartCaptcha) {
+      renderWidget();
+      return;
+    }
+
+    const waitForCaptcha = window.setInterval(() => {
+      if (!window.smartCaptcha) return;
+      window.clearInterval(waitForCaptcha);
+      renderWidget();
+    }, 100);
+  };
+
+  const resetCaptcha = () => {
+    captchaToken = "";
+    isCaptchaVerified = false;
+    if (window.smartCaptcha && captchaWidgetId !== null) {
+      window.smartCaptcha.reset(captchaWidgetId);
+    }
+    updateCaptchaSubmitState();
+  };
+
   const looksLikeTelegram = (value) => /^@[a-zA-Z0-9_]{5,32}$/.test(value);
 
   const normalizePhone = (value) => value.replace(/[^\d]/g, "");
+
+  const isNameValueValid = (value) => {
+    const trimmed = value.trim();
+    if (trimmed.length < 2 || trimmed.length > 100) return false;
+    return /^[a-zA-Zа-яА-ЯёЁ\s]+$/.test(trimmed);
+  };
+
+  const isContactValueValid = (value, mode) => {
+    const trimmed = value.trim();
+    if (!trimmed) return false;
+
+    if (mode === "telegram") {
+      return looksLikeTelegram(trimmed);
+    }
+
+    const digits = normalizePhone(trimmed);
+    return digits.length === 11 && /^7\d{10}$/.test(digits);
+  };
 
   const sanitizeName = (value) =>
     value
@@ -190,13 +299,14 @@ if (
   const setSubmittingState = (submitting) => {
     isSubmitting = submitting;
     if (!submitButton) return;
+    const canSubmitMain = canSubmitMainForm();
 
-    submitButton.disabled = submitting;
+    submitButton.disabled = submitting || !canSubmitMain;
     submitButton.textContent = submitting ? "Отправка..." : defaultButtonText;
-    popupDirectSendButton.disabled = submitting;
+    popupDirectSendButton.disabled = submitting || !canSubmitMain;
     popupToSurveyButton.disabled = submitting;
     popupBackButton.disabled = submitting;
-    popupSurveySubmitButton.disabled = submitting;
+    popupSurveySubmitButton.disabled = submitting || !canSubmitMain;
     if (submitting) {
       popupDirectSendButton.textContent = "Отправка...";
       popupSurveySubmitButton.textContent = "Отправка...";
@@ -209,41 +319,45 @@ if (
   nameInput.maxLength = 100;
 
   const sendForm = async ({ surveyAnswers = null } = {}) => {
-    const recipientEmail = FORM_CONFIG.recipientEmail?.trim();
-    if (!recipientEmail) {
-      throw new Error("Не указан email получателя в FORM_CONFIG.");
+    const apiEndpoint = FORM_CONFIG.apiEndpoint?.trim();
+    if (!apiEndpoint) {
+      throw new Error("Не указан apiEndpoint в FORM_CONFIG.");
     }
 
-    const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
-    const payload = new FormData();
-    payload.append("name", nameInput.value.trim());
-    payload.append("contact", contactInput.value.trim());
-    payload.append("_subject", FORM_CONFIG.subject || "Новая заявка с сайта");
-    payload.append("_template", "table");
-    payload.append("_captcha", "false");
-    if (surveyAnswers) {
-      payload.append("survey_q1", surveyAnswers.q1);
-      payload.append("survey_q2", surveyAnswers.q2);
-      payload.append("survey_q3", surveyAnswers.q3);
-    }
-
-    const response = await fetch(endpoint, {
+    const response = await fetch(apiEndpoint, {
       method: "POST",
-      body: payload,
       headers: {
-        Accept: "application/json",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        name: nameInput.value.trim(),
+        contact: contactInput.value.trim(),
+        captchaToken,
+        surveyAnswers,
+      }),
     });
 
+    const result = await response.json().catch(() => null);
     if (!response.ok) {
-      throw new Error("Ошибка сервера отправки.");
+      throw new Error(result?.message || "Ошибка сервера отправки.");
     }
 
-    const result = await response.json().catch(() => null);
-    if (result && result.success === "false") {
+    if (result && result.success === false) {
       throw new Error(result.message || "Не удалось отправить форму.");
     }
   };
+
+  const ensureCaptchaBeforeSubmit = () => {
+    if (!isCaptchaReady || !isCaptchaVerified || !captchaToken) {
+      setFormStatus("Подтвердите, что вы не робот.", "error");
+      return false;
+    }
+
+    return true;
+  };
+
+  initCaptcha();
+  updateCaptchaSubmitState();
 
   nameInput.addEventListener("input", () => {
     isNameTouched = true;
@@ -255,6 +369,7 @@ if (
     }
     setFormStatus("", null);
     validateName();
+    updateCaptchaSubmitState();
   });
 
   nameInput.addEventListener("blur", () => {
@@ -291,6 +406,7 @@ if (
     setFormStatus("", null);
     validateContact();
     previousContactValue = contactInput.value;
+    updateCaptchaSubmitState();
   });
 
   contactInput.addEventListener("blur", () => {
@@ -315,6 +431,7 @@ if (
 
   const openPopup = () => {
     showChoiceStep();
+    setPopupSurveyStatus("", null);
     popup.hidden = false;
     document.body.style.overflow = "hidden";
   };
@@ -324,6 +441,7 @@ if (
     document.body.style.overflow = "";
     showChoiceStep();
     popupSurvey.reset();
+    setPopupSurveyStatus("", null);
   };
 
   // Ensure survey step is always hidden by default.
@@ -335,7 +453,7 @@ if (
     const q3 = surveyQ3.value.trim();
 
     if (!q1 || !q2 || !q3) {
-      setFormStatus("Чтобы отправить опрос, заполните все 3 ответа.", "error");
+      setPopupSurveyStatus("Чтобы отправить опрос, заполните все 3 ответа.", "error");
       return null;
     }
 
@@ -344,8 +462,10 @@ if (
 
   const submitLead = async ({ surveyAnswers = null } = {}) => {
     if (isSubmitting) return;
+    if (!ensureCaptchaBeforeSubmit()) return;
 
     try {
+      setPopupSurveyStatus("Отправляю заявку...", "pending");
       setSubmittingState(true);
       await sendForm({ surveyAnswers });
       form.reset();
@@ -358,8 +478,14 @@ if (
       clearFieldError(contactInput, contactError);
       isNameTouched = false;
       isContactTouched = false;
+      resetCaptcha();
+      setPopupSurveyStatus("Заявка отправлена.", "success");
       setFormStatus("Заявка отправлена. Скоро свяжусь с вами.", "success");
     } catch (error) {
+      setPopupSurveyStatus(
+        "Не удалось отправить заявку. Проверьте соединение и попробуйте еще раз.",
+        "error"
+      );
       setFormStatus(
         "Не удалось отправить заявку. Проверьте соединение и попробуйте еще раз.",
         "error"
@@ -380,6 +506,7 @@ if (
   });
 
   popupDirectSendButton.addEventListener("click", () => {
+    showSurveyStep();
     submitLead();
   });
 
@@ -403,6 +530,15 @@ if (
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (!canOpenConsultationPopup()) {
+      if (!isCaptchaReady || !isCaptchaVerified || !captchaToken) {
+        setFormStatus("Сначала пройдите капчу.", "error");
+      } else {
+        setFormStatus("Заполните форму корректно перед отправкой.", "error");
+      }
+      return;
+    }
+    if (!ensureCaptchaBeforeSubmit()) return;
     if (!validate({ force: true })) return;
     setFormStatus("", null);
     openPopup();
