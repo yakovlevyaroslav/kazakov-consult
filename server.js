@@ -53,6 +53,7 @@ const sendLeadToEmail = async ({ name, contact, surveyAnswers }) => {
   }
 
   const subject = process.env.FORM_SUBJECT || "Новая заявка с лендинга";
+  const publicUrl = process.env.FORM_PUBLIC_URL || "http://localhost:8080";
   const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
   const payload = new FormData();
   payload.append("name", name);
@@ -70,7 +71,11 @@ const sendLeadToEmail = async ({ name, contact, surveyAnswers }) => {
   const response = await fetch(endpoint, {
     method: "POST",
     body: payload,
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      Origin: publicUrl,
+      Referer: `${publicUrl}/`,
+    },
   });
 
   if (!response.ok) {

@@ -54,6 +54,7 @@ src/
 
 1. Скопируйте `.env.example` в `.env`.
 2. Заполните значения:
+   - `FORM_PUBLIC_URL` — публичный URL фронта (локально `http://localhost:8080`);
    - `SMARTCAPTCHA_SECRET_KEY` — приватный ключ SmartCaptcha;
    - `FORM_RECIPIENT_EMAIL` — email, куда отправлять заявки;
    - `FORM_SUBJECT` — тема письма (опционально).

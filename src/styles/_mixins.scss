@@ -1,0 +1,66 @@
+@use "sass:map";
+
+// Popular viewport breakpoints (mobile-first).
+$breakpoints: (
+  xs: 360px,
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1440px,
+);
+
+@mixin up($point) {
+  @if not map.has-key($breakpoints, $point) {
+    @error "Unknown breakpoint `#{$point}`. Available: #{map.keys($breakpoints)}";
+  }
+
+  @media (min-width: map.get($breakpoints, $point)) {
+    @content;
+  }
+}
+
+@mixin down($point) {
+  @if not map.has-key($breakpoints, $point) {
+    @error "Unknown breakpoint `#{$point}`. Available: #{map.keys($breakpoints)}";
+  }
+
+  @media (max-width: (map.get($breakpoints, $point) - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin between($from, $to) {
+  @if not map.has-key($breakpoints, $from) or not map.has-key($breakpoints, $to) {
+    @error "Unknown breakpoints. Available: #{map.keys($breakpoints)}";
+  }
+
+  @media (min-width: map.get($breakpoints, $from)) and (max-width: (map.get($breakpoints, $to) - 0.02px)) {
+    @content;
+  }
+}
+
+// Semantic aliases for common ranges.
+@mixin mobile {
+  @include down(md) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include between(md, lg) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @include between(lg, xl) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include up(xl) {
+    @content;
+  }
+}

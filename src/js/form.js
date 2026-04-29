@@ -16,6 +16,7 @@ const popupToSurveyButton = document.getElementById("consultation-popup-to-surve
 const popupDirectSendButton = document.getElementById("consultation-popup-send-direct");
 const popupBackButton = document.getElementById("consultation-popup-back");
 const popupSurveySubmitButton = document.getElementById("consultation-popup-send-survey");
+const popupChoiceStatus = document.getElementById("consultation-popup-choice-status");
 const popupSurveyStatus = document.getElementById("consultation-popup-survey-status");
 const surveyQ1 = document.getElementById("survey-q1");
 const surveyQ2 = document.getElementById("survey-q2");
@@ -38,6 +39,7 @@ if (
   !popupDirectSendButton ||
   !popupBackButton ||
   !popupSurveySubmitButton ||
+  !popupChoiceStatus ||
   !popupSurveyStatus ||
   !surveyQ1 ||
   !surveyQ2 ||
@@ -56,6 +58,7 @@ if (
   let isCaptchaVerified = false;
   let captchaWidgetId = null;
   let isCaptchaReady = false;
+  let popupCloseTimerId = null;
 
   if (submitButton) {
     submitButton.disabled = true;
@@ -87,6 +90,14 @@ if (
     popupSurveyStatus.classList.remove("is-pending", "is-success", "is-error");
     if (type) {
       popupSurveyStatus.classList.add(`is-${type}`);
+    }
+  };
+
+  const setPopupChoiceStatus = (message, type) => {
+    popupChoiceStatus.textContent = message;
+    popupChoiceStatus.classList.remove("is-pending", "is-success", "is-error");
+    if (type) {
+      popupChoiceStatus.classList.add(`is-${type}`);
     }
   };
 
@@ -430,18 +441,32 @@ if (
   };
 
   const openPopup = () => {
+    if (popupCloseTimerId) {
+      window.clearTimeout(popupCloseTimerId);
+      popupCloseTimerId = null;
+    }
     showChoiceStep();
     setPopupSurveyStatus("", null);
+    setPopupChoiceStatus("", null);
     popup.hidden = false;
+    window.requestAnimationFrame(() => {
+      popup.classList.add("is-visible");
+    });
     document.body.style.overflow = "hidden";
   };
 
   const closePopup = () => {
-    popup.hidden = true;
+    popup.classList.remove("is-visible");
     document.body.style.overflow = "";
+    if (popupCloseTimerId) window.clearTimeout(popupCloseTimerId);
+    popupCloseTimerId = window.setTimeout(() => {
+      popup.hidden = true;
+      popupCloseTimerId = null;
+    }, 360);
     showChoiceStep();
     popupSurvey.reset();
     setPopupSurveyStatus("", null);
+    setPopupChoiceStatus("", null);
   };
 
   // Ensure survey step is always hidden by default.
@@ -460,12 +485,17 @@ if (
     return { q1, q2, q3 };
   };
 
-  const submitLead = async ({ surveyAnswers = null } = {}) => {
+  const submitLead = async ({ surveyAnswers = null, source = "survey" } = {}) => {
     if (isSubmitting) return;
     if (!ensureCaptchaBeforeSubmit()) return;
 
+    const setLocalStatus =
+      source === "direct"
+        ? setPopupChoiceStatus
+        : setPopupSurveyStatus;
+
     try {
-      setPopupSurveyStatus("Отправляю заявку...", "pending");
+      setLocalStatus("Отправляю заявку...", "pending");
       setSubmittingState(true);
       await sendForm({ surveyAnswers });
       form.reset();
@@ -479,10 +509,10 @@ if (
       isNameTouched = false;
       isContactTouched = false;
       resetCaptcha();
-      setPopupSurveyStatus("Заявка отправлена.", "success");
+      setLocalStatus("Заявка отправлена.", "success");
       setFormStatus("Заявка отправлена. Скоро свяжусь с вами.", "success");
     } catch (error) {
-      setPopupSurveyStatus(
+      setLocalStatus(
         "Не удалось отправить заявку. Проверьте соединение и попробуйте еще раз.",
         "error"
       );
@@ -506,15 +536,14 @@ if (
   });
 
   popupDirectSendButton.addEventListener("click", () => {
-    showSurveyStep();
-    submitLead();
+    submitLead({ source: "direct" });
   });
 
   popupSurvey.addEventListener("submit", (event) => {
     event.preventDefault();
     const surveyAnswers = validateSurvey();
     if (!surveyAnswers) return;
-    submitLead({ surveyAnswers });
+    submitLead({ surveyAnswers, source: "survey" });
   });
 
   popupBackdrop.addEventListener("click", () => {

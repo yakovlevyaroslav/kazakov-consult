@@ -2,6 +2,17 @@ const menuBtn = document.getElementById("menu-btn");
 const overlay = document.getElementById("nav-overlay");
 const closeBtn = document.getElementById("nav-overlay-close");
 const backdrop = document.getElementById("nav-overlay-backdrop");
+const heroCtaBtn = document.getElementById("hero-btn");
+const aboutCtaBtn = document.getElementById("about-btn");
+const consultationSection = document.getElementById("consultation");
+
+const scrollToConsultation = () => {
+  console.log("scrollToConsultation");
+  consultationSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+heroCtaBtn?.addEventListener("click", scrollToConsultation);
+aboutCtaBtn?.addEventListener("click", scrollToConsultation);
 
 if (menuBtn && overlay) {
   const navLinks = overlay.querySelectorAll('a[href^="#"]');

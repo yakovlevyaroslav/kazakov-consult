@@ -145,7 +145,7 @@
             <a class="nav-overlay__link" href="#tariffs">Формат и стоимость</a>
           </li>
           <li>
-            <a class="nav-overlay__link" href="#consultation">Запись на консультацию</a>
+            <a class="btn btn--primary" href="#consultation">Запись на консультацию</a>
           </li>
         </ul>
       </nav>
@@ -167,7 +167,7 @@
               и где хочешь быть
             </p>
 
-            <button class="btn btn--primary">
+            <button class="btn btn--primary" id="hero-btn">
               Записаться на разбор
             </button>
           </div>
@@ -216,7 +216,7 @@
               <p class="about__grid-item__text">
                 Есть ли у тебя желание поднять качество своей жизни?
               </p>
-              <button class="btn btn--primary">
+              <button class="btn btn--primary" id="about-btn">
                 Записаться на разбор
               </button>
             </div>
@@ -607,6 +607,10 @@
               <p class="tariffs__grid-item__text">
                 Это инвестиция, которая помогает сократить расходы и увеличить доходы. Когда речь заходит о «цене», помните: важно оценивать не только выгоды, но и то, во сколько вам обходится отсутствие Карты достижения результата.
               </p>
+
+              <button class="btn btn--primary" id="tariffs-btn">
+                Отправить заявку
+              </button>
             </div>
             <div class="tariffs__grid-item tariffs__grid-item--6">
               <h3 class="tariffs__grid-item__title">
@@ -717,6 +721,7 @@
           <p class="consultation-popup__subtitle">
             Можно сразу отправить заявку или пройти короткий опрос, чтобы я лучше понял вашу задачу.
           </p>
+          <div class="consultation-popup__status" id="consultation-popup-choice-status" aria-live="polite"></div>
           <div class="consultation-popup__actions">
             <button class="btn btn--primary" type="button" id="consultation-popup-to-survey">Пройти опрос</button>
             <button class="btn" type="button" id="consultation-popup-send-direct">Просто отправить</button>

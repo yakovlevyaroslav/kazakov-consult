@@ -181,10 +181,22 @@
   display: grid;
   place-items: center;
   padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .consultation-popup[hidden] {
   display: none;
+}
+
+.consultation-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .consultation-popup__backdrop {
@@ -192,6 +204,12 @@
   inset: 0;
   background: rgba(8, 16, 30, 0.72);
   backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.consultation-popup.is-visible .consultation-popup__backdrop {
+  opacity: 1;
 }
 
 .consultation-popup__dialog {
@@ -204,6 +222,16 @@
   color: #fff;
   max-height: calc(100vh - 40px);
   overflow: auto;
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.consultation-popup.is-visible .consultation-popup__dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .consultation-popup__content {

@@ -1,5 +1,8 @@
 export default function runPreloader({ appReady } = {}) {
   const preloader = document.getElementById("preloader");
+  const emitPreloaderDone = () => {
+    window.dispatchEvent(new CustomEvent("preloader:done"));
+  };
 
   if (!preloader) return Promise.resolve();
 
@@ -68,6 +71,7 @@ export default function runPreloader({ appReady } = {}) {
             document.body.classList.remove("app-loading");
             window.setTimeout(() => {
               preloader.remove();
+              emitPreloaderDone();
               resolve();
             }, removeDelay);
             return;
@@ -103,6 +107,7 @@ export default function runPreloader({ appReady } = {}) {
 
           window.setTimeout(() => {
             preloader.remove();
+            emitPreloaderDone();
             resolve();
           }, exitDuration + logoRevealDelay + overlayFadeDelay + removeDelay);
         })
