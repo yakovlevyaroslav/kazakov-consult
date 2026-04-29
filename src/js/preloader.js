@@ -13,8 +13,8 @@ export default function runPreloader({ appReady } = {}) {
   const logoRevealDelay = reduceMotion ? 0 : 350;
   const overlayFadeDelay = reduceMotion ? 0 : 350;
   const removeDelay = 350;
-  const typingStepMs = 100;
-  const typingFinishDelayMs = 300;
+  const typingStepMs = 77;
+  const typingFinishDelayMs = 777;
 
   const typePreloaderText = () => {
     if (!preloaderText) return Promise.resolve();

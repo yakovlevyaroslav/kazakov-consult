@@ -6,8 +6,39 @@ const contactInput = document.getElementById("phone");
 const nameError = document.getElementById("name-error");
 const contactError = document.getElementById("phone-error");
 const formStatus = document.getElementById("consultation-form-status");
+const popup = document.getElementById("consultation-popup");
+const popupBackdrop = document.getElementById("consultation-popup-backdrop");
+const popupDialog = popup?.querySelector(".consultation-popup__dialog");
+const popupChoice = document.getElementById("consultation-popup-choice");
+const popupSurvey = document.getElementById("consultation-popup-survey");
+const popupToSurveyButton = document.getElementById("consultation-popup-to-survey");
+const popupDirectSendButton = document.getElementById("consultation-popup-send-direct");
+const popupBackButton = document.getElementById("consultation-popup-back");
+const popupSurveySubmitButton = document.getElementById("consultation-popup-send-survey");
+const surveyQ1 = document.getElementById("survey-q1");
+const surveyQ2 = document.getElementById("survey-q2");
+const surveyQ3 = document.getElementById("survey-q3");
 
-if (!form || !nameInput || !contactInput || !nameError || !contactError || !formStatus) {
+if (
+  !form ||
+  !nameInput ||
+  !contactInput ||
+  !nameError ||
+  !contactError ||
+  !formStatus ||
+  !popup ||
+  !popupBackdrop ||
+  !popupDialog ||
+  !popupChoice ||
+  !popupSurvey ||
+  !popupToSurveyButton ||
+  !popupDirectSendButton ||
+  !popupBackButton ||
+  !popupSurveySubmitButton ||
+  !surveyQ1 ||
+  !surveyQ2 ||
+  !surveyQ3
+) {
   // Form can be absent on some pages.
 } else {
   const submitButton = form.querySelector('button[type="submit"]');
@@ -162,11 +193,22 @@ if (!form || !nameInput || !contactInput || !nameError || !contactError || !form
 
     submitButton.disabled = submitting;
     submitButton.textContent = submitting ? "Отправка..." : defaultButtonText;
+    popupDirectSendButton.disabled = submitting;
+    popupToSurveyButton.disabled = submitting;
+    popupBackButton.disabled = submitting;
+    popupSurveySubmitButton.disabled = submitting;
+    if (submitting) {
+      popupDirectSendButton.textContent = "Отправка...";
+      popupSurveySubmitButton.textContent = "Отправка...";
+    } else {
+      popupDirectSendButton.textContent = "Просто отправить";
+      popupSurveySubmitButton.textContent = "Отправить заявку";
+    }
   };
 
   nameInput.maxLength = 100;
 
-  const sendForm = async () => {
+  const sendForm = async ({ surveyAnswers = null } = {}) => {
     const recipientEmail = FORM_CONFIG.recipientEmail?.trim();
     if (!recipientEmail) {
       throw new Error("Не указан email получателя в FORM_CONFIG.");
@@ -179,6 +221,11 @@ if (!form || !nameInput || !contactInput || !nameError || !contactError || !form
     payload.append("_subject", FORM_CONFIG.subject || "Новая заявка с сайта");
     payload.append("_template", "table");
     payload.append("_captcha", "false");
+    if (surveyAnswers) {
+      payload.append("survey_q1", surveyAnswers.q1);
+      payload.append("survey_q2", surveyAnswers.q2);
+      payload.append("survey_q3", surveyAnswers.q3);
+    }
 
     const response = await fetch(endpoint, {
       method: "POST",
@@ -251,16 +298,59 @@ if (!form || !nameInput || !contactInput || !nameError || !contactError || !form
     validateContact({ force: true });
   });
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (isSubmitting) return;
+  const showChoiceStep = () => {
+    popupChoice.hidden = false;
+    popupSurvey.hidden = true;
+  };
 
-    if (!validate({ force: true })) return;
+  const showSurveyStep = () => {
+    popupChoice.hidden = true;
+    popupSurvey.hidden = false;
+    popupSurvey.scrollIntoView({ behavior: "smooth", block: "start" });
+    popupDialog.scrollTo({ top: 0, behavior: "smooth" });
+    window.setTimeout(() => {
+      surveyQ1.focus();
+    }, 220);
+  };
+
+  const openPopup = () => {
+    showChoiceStep();
+    popup.hidden = false;
+    document.body.style.overflow = "hidden";
+  };
+
+  const closePopup = () => {
+    popup.hidden = true;
+    document.body.style.overflow = "";
+    showChoiceStep();
+    popupSurvey.reset();
+  };
+
+  // Ensure survey step is always hidden by default.
+  showChoiceStep();
+
+  const validateSurvey = () => {
+    const q1 = surveyQ1.value.trim();
+    const q2 = surveyQ2.value.trim();
+    const q3 = surveyQ3.value.trim();
+
+    if (!q1 || !q2 || !q3) {
+      setFormStatus("Чтобы отправить опрос, заполните все 3 ответа.", "error");
+      return null;
+    }
+
+    return { q1, q2, q3 };
+  };
+
+  const submitLead = async ({ surveyAnswers = null } = {}) => {
+    if (isSubmitting) return;
 
     try {
       setSubmittingState(true);
-      await sendForm();
+      await sendForm({ surveyAnswers });
       form.reset();
+      popupSurvey.reset();
+      closePopup();
       contactMode = null;
       previousContactValue = "";
       contactInput.placeholder = "+7 999 123-45-67 или @telegram";
@@ -279,5 +369,42 @@ if (!form || !nameInput || !contactInput || !nameError || !contactError || !form
     } finally {
       setSubmittingState(false);
     }
+  };
+
+  popupToSurveyButton.addEventListener("click", () => {
+    showSurveyStep();
+  });
+
+  popupBackButton.addEventListener("click", () => {
+    showChoiceStep();
+  });
+
+  popupDirectSendButton.addEventListener("click", () => {
+    submitLead();
+  });
+
+  popupSurvey.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const surveyAnswers = validateSurvey();
+    if (!surveyAnswers) return;
+    submitLead({ surveyAnswers });
+  });
+
+  popupBackdrop.addEventListener("click", () => {
+    if (isSubmitting) return;
+    closePopup();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !popup.hidden && !isSubmitting) {
+      closePopup();
+    }
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!validate({ force: true })) return;
+    setFormStatus("", null);
+    openPopup();
   });
 }

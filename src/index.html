@@ -68,6 +68,10 @@
         "inLanguage": "ru"
       }
     </script>
+
+    <!-- Подключение внешних скриптов -->
+    <script src="https://smartcaptcha.cloud.yandex.ru/captcha.js" defer></script>
+
   </head>
   <body class="app-loading">
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -661,10 +665,11 @@
                   autocomplete="tel"
                 >
                 <div class="consultation__field-error" id="phone-error" aria-live="polite"></div>
-                <div class="consultation__form-info">
-                  Можно указать номер телефона или MAX, а также Telegram в формате `@username`. 
-                </div>
-                
+                <div
+                    id="captcha-container"
+                    class="smart-captcha"
+                    data-sitekey="ysc1_fGaH4jKQ1a8L62T3do2U00atstfJ8wP9Jj3dYJN646a60c7b"
+                ></div>
                 <button class="btn btn--primary" type="submit">Отправить заявку</button>
               </form>
             </div>
@@ -702,10 +707,43 @@
     <footer class="site-footer" id="footer">
       <div class="container footer__inner">
         <p class="footer__copy">© <span id="year"></span>Kazakov Consult Все права защищены.</p>
-        <a class="footer__link" href="#header">Наверх</a>
       </div>
     </footer>
 
-    
+    <div class="consultation-popup" id="consultation-popup" hidden>
+      <div class="consultation-popup__backdrop" id="consultation-popup-backdrop"></div>
+      <div class="consultation-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="consultation-popup-title">
+        <div class="consultation-popup__content consultation-popup__content--choice" id="consultation-popup-choice">
+          <h3 class="consultation-popup__title" id="consultation-popup-title">Как вам удобнее продолжить?</h3>
+          <p class="consultation-popup__subtitle">
+            Можно сразу отправить заявку или пройти короткий опрос, чтобы я лучше понял вашу задачу.
+          </p>
+          <div class="consultation-popup__actions">
+            <button class="btn btn--primary" type="button" id="consultation-popup-to-survey">Пройти опрос</button>
+            <button class="btn" type="button" id="consultation-popup-send-direct">Просто отправить</button>
+          </div>
+        </div>
+
+        <form class="consultation-popup__content consultation-popup__content--survey" id="consultation-popup-survey" hidden>
+          <h3 class="consultation-popup__title">Короткий опрос</h3>
+          <p class="consultation-popup__subtitle">Ответьте в свободной форме, чтобы заявка была точнее.</p>
+
+          <label for="survey-q1">1. Чем занимаешься?</label>
+          <textarea id="survey-q1" name="survey-q1" rows="3" placeholder="Напиши род деятельности, профессию или хобби"></textarea>
+
+          <label for="survey-q2">2. Какая точка А?</label>
+          <textarea id="survey-q2" name="survey-q2" rows="3" placeholder="А б В букавы"></textarea>
+
+          <label for="survey-q3">3. С каким запросом хотел/а бы разобраться?</label>
+          <textarea id="survey-q3" name="survey-q3" rows="3" placeholder="Например: не хватает энергии, ничего не успеваю, копятся дела."></textarea>
+
+          <div class="consultation-popup__actions">
+            <button class="btn" type="button" id="consultation-popup-back">Назад</button>
+            <button class="btn btn--primary" type="submit" id="consultation-popup-send-survey">Отправить заявку</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </body>
 </html>

@@ -88,16 +88,6 @@
       box-shadow: 0 0 0 1px rgba(255, 142, 161, 0.35);
     }
   }
-
-  &-info {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.4px;
-    margin-bottom: 20px;
-  }
 }
 
 .consultation__field-error {
@@ -171,5 +161,96 @@
         color: #2B6DF8;
       }
     }
+  }
+}
+
+.consultation-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.consultation-popup[hidden] {
+  display: none;
+}
+
+.consultation-popup__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 16, 30, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.consultation-popup__dialog {
+  position: relative;
+  width: min(760px, 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(160deg, rgba(16, 28, 52, 0.98) 8.49%, rgba(23, 48, 88, 0.95) 53.32%, rgba(40, 111, 180, 0.9) 91.51%);
+  box-shadow: 0 32px 100px rgba(6, 21, 42, 0.45);
+  color: #fff;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+}
+
+.consultation-popup__content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(24px, 4vw, 36px);
+
+  label {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    resize: vertical;
+    min-height: 92px;
+    padding: 12px;
+    font: inherit;
+    line-height: 1.4;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+}
+
+.consultation-popup__content[hidden] {
+  display: none;
+}
+
+.consultation-popup__title {
+  margin: 0;
+  font-family: $font-family-unbounded;
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -1.2px;
+}
+
+.consultation-popup__subtitle {
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.consultation-popup__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+
+  .btn {
+    flex: 1 1 220px;
   }
 }
