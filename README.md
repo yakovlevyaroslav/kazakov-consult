@@ -21,6 +21,7 @@ npm install
 | `npm run build` | Production: папка `dist/` — хэшированные `js/` и `css/`, минификация скриптов (Terser), стилей (cssnano через CssMinimizerPlugin) и HTML |
 | `./dev.sh` | Запускает API и dev-server в одном терминале (live-обновление верстки) |
 | `./prod.sh` | Собирает production и запускает сервер раздачи `dist` |
+| `./release.sh` | Релиз на VPS из текущего репозитория: `git pull`, `npm ci`, сборка, перезапуск PM2, health-check |
 
 После `npm run build` раздавайте содержимое каталога `dist/` любым статическим хостингом.
 
@@ -85,6 +86,31 @@ npm start
 ```
 
 Скрипт сначала выполняет `npm run build`, затем запускает сервер на `http://localhost:3000` (или на порту из `PORT` в `.env`).
+
+### 3.2) Релиз на VPS (release)
+
+Быстрый запуск:
+
+```bash
+chmod +x release.sh
+./release.sh
+```
+
+Что делает скрипт:
+- выполняется прямо на VPS в папке проекта;
+- обновляет код через `git pull` (можно отключить флагом `--skip-pull`);
+- выполняет `npm ci` и `npm run build` (можно отключить флагами);
+- перезапускает `pm2` процесс `kazakov` (или стартует `./prod.sh`);
+- делает health-check URL после релиза.
+
+Полезные параметры:
+
+```bash
+./release.sh --health https://kazakov-consult.ru
+./release.sh --branch main
+./release.sh --skip-pull
+./release.sh --skip-install --skip-build
+```
 
 ### 4) Что происходит при отправке
 
