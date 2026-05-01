@@ -79,6 +79,26 @@ pm2 save
 pm2 status
 
 echo "==> Health check: ${RELEASE_HEALTHCHECK_URL}"
-curl -fsSIL "${RELEASE_HEALTHCHECK_URL}" >/dev/null
+HEALTH_RETRIES=12
+HEALTH_DELAY_SEC=5
+HEALTH_OK=0
+
+for ((i=1; i<=HEALTH_RETRIES; i++)); do
+  if curl -fsSIL "${RELEASE_HEALTHCHECK_URL}" >/dev/null; then
+    HEALTH_OK=1
+    break
+  fi
+  echo "  попытка ${i}/${HEALTH_RETRIES} неуспешна, жду ${HEALTH_DELAY_SEC}с..."
+  sleep "${HEALTH_DELAY_SEC}"
+done
+
+if [[ "${HEALTH_OK}" -ne 1 ]]; then
+  echo "❌ Health-check не прошёл: ${RELEASE_HEALTHCHECK_URL}"
+  echo "Последний статус PM2:"
+  pm2 status || true
+  echo "Последние логи PM2 (kazakov):"
+  pm2 logs kazakov --lines 60 --nostream || true
+  exit 1
+fi
 
 echo "✅ Релиз завершён успешно"
