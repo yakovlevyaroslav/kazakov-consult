@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .about {
 
   &__greeting {
@@ -41,6 +43,17 @@
   grid-template-rows: repeat(7, 1fr);
   gap: 8px;
   max-width: 1200px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 
   &-item {
     display: flex;
@@ -106,15 +119,43 @@
     &--1 {
       grid-column: span 2 / span 2;
       grid-row: span 3 / span 3;
+      padding: 20px;
+      min-height: 240px;
+      width: 100%;
 
       background: radial-gradient(109.58% 100.82% at 28% 24%, rgba(119, 214, 255, 0.26) 0%, rgba(0, 0, 0, 0.00) 22%), radial-gradient(106.34% 97.84% at 72% 72%, rgba(140, 240, 207, 0.24) 0%, rgba(0, 0, 0, 0.00) 24%), linear-gradient(160deg, rgba(238, 246, 255, 0.94) 8.49%, rgba(225, 239, 255, 0.84) 91.51%);
       box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.92) inset, 0 28px 70px 0 rgba(70, 109, 164, 0.14);
+
+      @include tablet {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      @include mobile {
+        display: none;
+      }
+
+      .about__grid-item__hero {
+        background-image: url('../assets/hero-2.png');
+        background-size: cover;
+        background-position: top center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+      }
     }
     
     &--2 {
         grid-column: span 4 / span 4;
         grid-row: span 3 / span 3;
         grid-column-start: 3;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+        }
     }
     
     &--3 {
@@ -131,6 +172,14 @@
         .btn {
           margin-top: auto;
         }
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+          grid-row-start: auto;
+          order: 5;
+        }
     }
     
     &--4 {
@@ -138,6 +187,13 @@
         grid-row: span 2 / span 2;
         grid-column-start: 3;
         grid-row-start: 4;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+          grid-row-start: auto;
+        }
     }
     
     &--5 {
@@ -145,6 +201,13 @@
         grid-row: span 2 / span 2;
         grid-column-start: 5;
         grid-row-start: 4;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+          grid-row-start: auto;
+        }
     }
     
     &--6 {
@@ -152,6 +215,13 @@
       grid-row: span 2 / span 2;
       grid-column-start: 1;
       grid-row-start: 6;
+
+      @include tablet {
+        grid-column: auto;
+        grid-row: auto;
+        grid-column-start: auto;
+        grid-row-start: auto;
+      }
     }
     
     &--7 {
@@ -159,6 +229,13 @@
       grid-row: span 2 / span 2;
       grid-column-start: 3;
       grid-row-start: 6;
+
+      @include tablet {
+        grid-column: auto;
+        grid-row: auto;
+        grid-column-start: auto;
+        grid-row-start: auto;
+      }
     }
     
     &--8 {
@@ -166,6 +243,30 @@
       grid-row: span 2 / span 2;
       grid-column-start: 5;
       grid-row-start: 6;
+
+      @include tablet {
+        grid-column: auto;
+        grid-row: auto;
+        grid-column-start: auto;
+        grid-row-start: auto;
+      }
+    }
+
+    @include mobile {
+      padding: 16px;
+      border-radius: 18px;
+
+      &__text {
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      &--main__title,
+      &__title {
+        font-size: 24px;
+        line-height: 1.2;
+        letter-spacing: -0.6px;
+      }
     }
   }
 }

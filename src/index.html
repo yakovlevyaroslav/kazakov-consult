@@ -16,7 +16,8 @@
       content="консалтинг, бизнес-консалтинг, предприниматель, руководитель, стратегия, карта достижения результата, консультация"
     />
     <meta name="author" content="Kazakov Consult" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- Предрелиз: не индексировать. Перед релизом верните index, follow и актуальный robots.txt -->
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://example.com/" />
 
     <!-- Open Graph: как страница отображается при шаринге в соцсетях/мессенджерах -->
@@ -47,6 +48,14 @@
     />
     <meta name="twitter:image" content="https://example.com/og-image.jpg" />
     <meta name="theme-color" content="#111111" />
+
+    <!-- Favicon / иконки: все файлы кладите в папку public/ (корень сайта после сборки). -->
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Kazakov Consult" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 
     <!-- Заголовок страницы в поиске и вкладке браузера -->
     <title>Kazakov Consult — консалтинг для предпринимателей и руководителей</title>
@@ -199,7 +208,9 @@
           </p>
 
           <div class="about__grid">
-            <div class="about__grid-item about__grid-item--1"></div>
+            <div class="about__grid-item about__grid-item--1">
+              <div class="about__grid-item__hero"></div>
+            </div>
             <div class="about__grid-item about__grid-item--main about__grid-item--2">
               <h3 class="about__grid-item--main__title">
                 10+ лет в бизнесе: от производства с выручкой 125 млн до IT-стартапа с венчурными инвестициями.
@@ -750,6 +761,39 @@
       </div>
     </div>
 
-    <script src="https://smartcaptcha.yandexcloud.net/captcha.js" defer></script>
+    <div
+      id="cookie-consent"
+      class="cookie-consent"
+      hidden
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="cookie-consent-title"
+      aria-describedby="cookie-consent-desc"
+    >
+      <div class="cookie-consent__panel">
+        <div class="cookie-consent__inner container">
+          <div class="cookie-consent__text">
+            <h2 class="cookie-consent__title" id="cookie-consent-title">
+              Обработка данных и cookie
+            </h2>
+            <p class="cookie-consent__body" id="cookie-consent-desc">
+              Мы используем cookie и похожие технологии для работы сайта, аналитики и удобства.
+              Продолжая пользоваться сайтом, вы соглашаетесь с
+              <a
+                class="cookie-consent__link"
+                href="/privacy-policy.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >политикой конфиденциальности</a>.
+            </p>
+          </div>
+          <div class="cookie-consent__actions">
+            <button type="button" class="btn btn--primary" id="cookie-consent-accept">
+              Принять
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

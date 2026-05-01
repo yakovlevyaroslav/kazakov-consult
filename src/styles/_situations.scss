@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .situations {
 
   &__inner {
@@ -22,6 +24,17 @@
     grid-template-rows: repeat(4, 1fr);
     gap: 20px;
 
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: 12px;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
     &-item {
       display: flex;
       flex-direction: column;
@@ -37,18 +50,35 @@
       &--1 {
         grid-column: span 4 / span 4;
         grid-row: span 2 / span 2;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+        }
       }
       
       &--2 {
         grid-column: span 2 / span 2;
         grid-row: span 2 / span 2;
         grid-column-start: 5;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+        }
       }
       
       &--3 {
         grid-column: span 2 / span 2;
         grid-row: span 2 / span 2;
         grid-row-start: 3;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-row-start: auto;
+        }
       }
       
       &--4 {
@@ -56,6 +86,13 @@
         grid-row: span 2 / span 2;
         grid-column-start: 3;
         grid-row-start: 3;
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+          grid-row-start: auto;
+        }
       }
       
       &--5 {
@@ -67,6 +104,13 @@
         border: 1px solid rgba(255, 255, 255, 0.70);
         background: radial-gradient(141.69% 141.16% at 100% 0%, rgba(119, 214, 255, 0.18) 0%, rgba(0, 0, 0, 0.00) 22%), linear-gradient(180deg, rgba(237, 246, 255, 0.92) 0%, rgba(227, 243, 251, 0.78) 100%);
         box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.80) inset, 0 22px 60px 0 rgba(75, 114, 170, 0.12);
+
+        @include tablet {
+          grid-column: auto;
+          grid-row: auto;
+          grid-column-start: auto;
+          grid-row-start: auto;
+        }
       }
 
       &__title {
@@ -76,6 +120,11 @@
         font-weight: 400;
         line-height: 31px; /* 120% */
         letter-spacing: -0.8px;
+
+        @include mobile {
+          font-size: 22px;
+          line-height: 1.2;
+        }
       }
 
       &__text {
@@ -84,6 +133,11 @@
         font-style: normal;
         font-weight: 400;
         line-height: 24px; /* 165% */
+
+        @include mobile {
+          font-size: 14px;
+          line-height: 1.5;
+        }
       }
 
 
@@ -95,9 +149,13 @@
         background-repeat: no-repeat;
         margin-bottom: auto;
         
-        border-radius: 28px;
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.90) 6.17%, rgba(225, 239, 255, 0.62) 93.83%);
-        box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.85) inset, 0 16px 34px 0 rgba(62, 102, 160, 0.14);
+        border-radius: 25px;
+
+        @include mobile {
+          width: 66px;
+          height: 66px;
+          border-radius: 20px;
+        }
       
         &--1 {
           background-image: url('../assets/icon-situations--1.png');

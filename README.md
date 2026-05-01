@@ -32,7 +32,7 @@ src/
   main.js             — точка входа: подключает SCSS и логику приложения
   js/
     form.js           — валидация, маска контакта, отправка формы
-    form-config.js    — email получателя и тема письма (удобно править)
+    form-config.js    — публичный ключ SmartCaptcha и URL API заявки
   styles/
     main.scss         — сборка стилей
     _variables.scss   — токены и брейкпоинты
@@ -100,7 +100,7 @@ npm start
 1. Укажите email в `.env` (`FORM_RECIPIENT_EMAIL`).
 2. Запустите `npm run start:api` и `npm start` или опубликуйте сборку вместе с API.
 3. Отправьте форму один раз.
-3. Подтвердите форму по ссылке из письма FormSubmit (активация обязательна).
+4. Подтвердите форму по ссылке из письма FormSubmit (активация обязательна).
 
 ## Требования к полям формы
 
@@ -112,3 +112,20 @@ npm start
 ## Альтернатива: EmailJS
 
 Логику `fetch` в `src/js/form.js` можно заменить на [EmailJS](https://www.emailjs.com/) при необходимости.
+
+## Предрелиз и публикация
+
+Сейчас включён **запрет индексации**: `public/robots.txt` (`Disallow: /`), в `index.html` — `meta name="robots" content="noindex, nofollow"`, в `server.js` — заголовок `X-Robots-Tag`. Перед открытым продом отключите это и настройте индексацию.
+
+Чеклист перед релизом:
+
+1. **Домен и SEO** — во всём `src/index.html` замените `https://example.com/` на боевой URL (canonical, Open Graph, Twitter, JSON-LD). Добавьте реальный `og-image` в `public/` и обновите пути в мета-тегах.
+2. **`public/robots.txt`** — вместо `Disallow: /` задайте `Allow: /` и при необходимости строку `Sitemap: https://ваш-домен/sitemap.xml` (файл sitemap можно сгенерировать отдельно).
+3. **`server.js`** — удалите middleware с `X-Robots-Tag` (или оставьте только для staging).
+4. **`FORM_PUBLIC_URL`** в `.env` на проде — точный публичный URL сайта (важно для FormSubmit).
+5. **Прод-сервер** — запуск через `./prod.sh` выставляет `NODE_ENV=production` (короткие ответы об ошибках API без поля `error` в теле).
+6. **Политика и куки** — заполните `public/privacy-policy.html`, проверьте текст баннера cookie в `index.html`.
+7. **Секьюрити** — в `public/.well-known/security.txt` укажите рабочий `Contact:`.
+8. **Ключи** — не публикуйте приватные ключи в git; публичный ключ капчи в `form-config.js` при желании вынесите в переменные сборки.
+
+Файлы в `public/` (в т.ч. `robots.txt`, иконки, `privacy-policy.html`) копируются в корень `dist/` при сборке.

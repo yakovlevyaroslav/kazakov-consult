@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "mixins" as *;
 
 .site-header {
   position: fixed;
@@ -36,6 +37,14 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 0;
+
+  @include tablet {
+    padding: 0.75rem 0;
+  }
+
+  @include tablet {
+    padding: 0.5rem 0;
+  }
 }
 
 .logo {
@@ -50,6 +59,14 @@
   border: 1px solid rgba(255, 255, 255, 0.65);
   background-color: rgba(255, 255, 255, 0.55);
   box-shadow: 0 14px 36px 0 rgba(48, 84, 136, 0.08);
+
+  @include mobile {
+    width: auto;
+    min-width: 142px;
+    padding: 0 12px;
+    height: 36px;
+    gap: 8px;
+  }
 
   &__circle {
     width: 12px;
@@ -68,6 +85,11 @@
     font-weight: 700;
     line-height: 21px; /* 150% */
     letter-spacing: 0.28px;
+
+    @include mobile {
+      font-size: 12px;
+      line-height: 1.2;
+    }
   }
 }
 
@@ -96,6 +118,13 @@
 
   cursor: pointer;
 
+  @include mobile {
+    height: 44px;
+    padding: 0 12px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
   &__lines {
     display: flex;
     width: 40px;
@@ -109,6 +138,13 @@
 
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.08);
+
+    @include mobile {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      gap: 4px;
+    }
   }
 
   &__line {
@@ -134,4 +170,8 @@
 
 #main {
   padding-top: $site-header-height;
+
+  @include mobile {
+    padding-top: 50px;
+  }
 }

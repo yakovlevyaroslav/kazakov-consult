@@ -9,6 +9,8 @@ if [ ! -f ".env" ]; then
   exit 1
 fi
 
+export NODE_ENV=production
+
 echo "Собираю production-бандл..."
 npm run build
 

@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .steps {
 
 }
@@ -14,6 +16,11 @@
 
   position: relative;
 
+  @include mobile {
+    padding-left: 16px;
+    gap: 14px;
+  }
+
   &-line {
     border-radius: 999px;
     background: linear-gradient(180deg, rgba(43, 109, 248, 0.12) 0%, rgba(43, 109, 248, 0.42) 40%, rgba(140, 240, 207, 0.50) 100%);
@@ -29,6 +36,10 @@
   &-item {
     display: flex;
     gap: 20px;
+
+    @include mobile {
+      gap: 10px;
+    }
 
     &__number {
       display: flex;
@@ -50,6 +61,14 @@
       border: 1px solid rgba(255, 255, 255, 0.84);
       background: linear-gradient(145deg, rgba(255, 255, 255, 0.96) 6.17%, rgba(225, 239, 255, 0.72) 93.83%);
       box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.90) inset, 0 18px 34px 0 rgba(67, 106, 160, 0.14);
+
+      @include mobile {
+        width: 52px;
+        height: 52px;
+        padding: 0;
+        border-radius: 16px;
+        font-size: 12px;
+      }
     }
 
     &__block {
@@ -63,6 +82,11 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+
+      @include mobile {
+        padding: 16px;
+        border-radius: 18px;
+      }
 
       &--dop {
         border: 1px solid rgba(255, 255, 255, 0.86);
@@ -88,6 +112,11 @@
       font-weight: 400;
       line-height: 31px; /* 116% */
       letter-spacing: -0.8px;
+
+      @include mobile {
+        font-size: 22px;
+        line-height: 1.2;
+      }
     }
 
     &__text {
@@ -96,6 +125,11 @@
       font-style: normal;
       font-weight: 400;
       line-height: 25px; /* 168% */
+
+      @include mobile {
+        font-size: 14px;
+        line-height: 1.55;
+      }
     }
 
     &__dop {
@@ -109,6 +143,11 @@
       border: 1px solid rgba(255, 255, 255, 0.82);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(243, 250, 255, 0.78) 100%);
       box-shadow: 0 16px 38px 0 rgba(65, 105, 161, 0.10);
+
+      @include mobile {
+        padding: 14px;
+        border-radius: 16px;
+      }
 
       &__title {
         color: #122033;

@@ -1,0 +1,113 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.cookie-consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 950;
+  padding: 16px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  pointer-events: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.cookie-consent__panel {
+  max-width: 700px;
+  width: min(100%, $container-max + 2rem);
+  margin: 0 auto;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    160deg,
+    rgba(16, 28, 52, 0.97) 8.49%,
+    rgba(23, 48, 88, 0.94) 53.32%,
+    rgba(40, 111, 180, 0.9) 91.51%
+  );
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 -20px 80px rgba(6, 21, 42, 0.55);
+  color: #fff;
+  backdrop-filter: blur(10px);
+
+  @include mobile {
+    border-radius: 18px;
+  }
+}
+
+.cookie-consent__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 28px);
+  padding: clamp(18px, 3vw, 24px) clamp(18px, 3vw, 28px);
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.cookie-consent__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cookie-consent__title {
+  margin: 0 0 8px;
+  font-family: $font-family-unbounded;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+}
+
+.cookie-consent__body {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  line-height: 1.55;
+
+  @include mobile {
+    font-size: 13px;
+  }
+}
+
+.cookie-consent__link {
+  color: #b8d7ff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 215, 255, 0.45);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    text-decoration-color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.cookie-consent__actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  @include mobile {
+    width: 100%;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .btn {
+    min-width: min(100%, 200px);
+    height: 52px;
+    padding: 12px 22px;
+    font-size: 15px;
+  }
+}

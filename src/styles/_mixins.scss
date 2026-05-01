@@ -40,7 +40,12 @@ $breakpoints: (
   }
 }
 
-// Semantic aliases for common ranges.
+// Семантика (классический «tablet = всё до десктопа»):
+// - mobile:       только телефоны …767px — точечные правки поверх tablet
+// - tablet:       всё ниже xl — от самого узкого viewport, включая mobile (max-width)
+// - tablet-only:  только «средний» слой 768…1279px (без узких телефонов), если нужно
+// - laptop:       1024…1279px — узкие доработки ноутбуков
+// - desktop:      1280px и выше
 @mixin mobile {
   @include down(md) {
     @content;
@@ -48,7 +53,13 @@ $breakpoints: (
 }
 
 @mixin tablet {
-  @include between(md, lg) {
+  @include down(xl) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @include between(md, xl) {
     @content;
   }
 }

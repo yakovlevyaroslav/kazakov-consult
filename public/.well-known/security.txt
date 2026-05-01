@@ -1,0 +1,3 @@
+# Замените на актуальные контакты перед релизом (см. https://securitytxt.org/)
+Contact: mailto:you@example.com
+Preferred-Languages: ru, en
