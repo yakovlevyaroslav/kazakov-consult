@@ -54,20 +54,32 @@ const verifyCaptcha = async (token, ip) => {
 };
 
 const sendLeadToEmail = async ({ name, contact, surveyAnswers }) => {
-  const recipientEmail = process.env.FORM_RECIPIENT_EMAIL;
-  if (!recipientEmail) {
+  const rawRecipients = process.env.FORM_RECIPIENT_EMAIL;
+  if (!rawRecipients) {
     throw new Error("Server is not configured: FORM_RECIPIENT_EMAIL is missing.");
   }
 
+  const recipientEmails = rawRecipients
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+  if (!recipientEmails.length) {
+    throw new Error("Server is not configured: FORM_RECIPIENT_EMAIL is empty.");
+  }
+
+  const [primaryEmail, ...ccEmails] = recipientEmails;
   const subject = process.env.FORM_SUBJECT || "Новая заявка с лендинга";
   const publicUrl = process.env.FORM_PUBLIC_URL || "http://localhost:8080";
-  const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`;
+  const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(primaryEmail)}`;
   const payload = new FormData();
   payload.append("name", name);
   payload.append("contact", contact);
   payload.append("_subject", subject);
   payload.append("_template", "table");
   payload.append("_captcha", "false");
+  if (ccEmails.length) {
+    payload.append("_cc", ccEmails.join(","));
+  }
 
   if (surveyAnswers) {
     payload.append("survey_q1", surveyAnswers.q1 || "");

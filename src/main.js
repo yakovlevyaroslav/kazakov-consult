@@ -8,3 +8,6 @@ import runGsapAnimations from "./js/gsap-animations.js";
 
 initCookieConsent();
 runGsapAnimations();
+
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
