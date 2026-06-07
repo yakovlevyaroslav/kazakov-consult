@@ -19,12 +19,6 @@ const app = express();
 const port = Number(process.env.PORT || 3000);
 const isProd = process.env.NODE_ENV === "production";
 
-// Предрелиз: запрет индексации (вместе с meta robots и public/robots.txt). Уберите перед продом.
-app.use((_req, res, next) => {
-  res.setHeader("X-Robots-Tag", "noindex, nofollow");
-  next();
-});
-
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
